@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/active_button.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/bottom_sheet.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/button.xml" value="0.2851851851851852" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/button_back.xml" value="0.275" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/button_background.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic__.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic__2.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic_avatars.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic_back.xml" value="0.275" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic_back_button.xml" value="0.2851851851851852" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic_launcher_background.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic_next.xml" value="0.275" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/ic_open.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/inactive_button.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/drawable/input_view.xml" value="0.28615384615384615" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/layout/activity_main.xml" value="0.2604166666666667" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/layout/bottom_sheet_fragment.xml" value="0.264" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/layout/fragment1.xml" value="0.47231833910034604" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.23679245283018868" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/layout/fragment_coefficients.xml" value="0.264" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/layout/item_coefficient.xml" value="0.536" />
+        <entry key="..\:/AndroidProjects/OSAGOcalculator/app/src/main/res/layout/item_data.xml" value="0.4472361809045226" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

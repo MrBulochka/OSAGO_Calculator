@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Калькулятор ОСАГО</string>
+    <string name="your_coefficients">Ваши коэффициенты</string>
+    <string name="base_coefficients">БТ×КМ×КТ×КБМ×КО×КВС</string>
+    <string name="calculate_OSAGO">Рассчитать ОСАГО</string>
+    <string name="text_btn_next">Далее</string>
+</resources>
