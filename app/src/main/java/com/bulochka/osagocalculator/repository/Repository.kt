@@ -15,4 +15,8 @@ class Repository(private val coefficientDao: CoefficientDao,
     suspend fun getDataById(id: Int): Data {
         return dataDao.getDataById(id)
     }
+
+    suspend fun updateAllData(listData: List<Data>) {
+        dataDao.updateAllData(listData)
+    }
 }

@@ -12,6 +12,7 @@ class CoefficientsViewModel(repository: Repository) : ViewModel() {
     val data: LiveData<List<Data>> = repository.data.asLiveData()
 }
 
+
 class CoefficientsViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CoefficientsViewModel::class.java)) {

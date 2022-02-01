@@ -3,12 +3,14 @@ package com.bulochka.osagocalculator.ui.adapters
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bulochka.osagocalculator.databinding.ItemDataBinding
 import com.bulochka.osagocalculator.data.model.Data
+import com.bulochka.osagocalculator.utils.PixelsConverter
 
 class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil()) {
 
@@ -22,7 +24,7 @@ class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil())
         holder.onBind(data)
         holder.itemView.setOnClickListener {
             onDataClickListener?.let {
-                it(data)
+                it(position)
             }
         }
     }
@@ -32,14 +34,17 @@ class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil())
             binding.apply {
                 hint.text = data.hint
                 value.text = data.value
+                if (data.value.isNotEmpty()) {
+                    hint.textSize = 14f
+                    value.visibility = VISIBLE
+                }
             }
-
         }
     }
 
     class DataDiffUtil: DiffUtil.ItemCallback<Data>() {
         override fun areItemsTheSame(oldItem: Data, newItem: Data): Boolean {
-            return oldItem.hint == newItem.hint
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Data, newItem: Data): Boolean {
@@ -47,8 +52,8 @@ class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil())
         }
     }
 
-    private var onDataClickListener: ((Data) -> Unit)? = null
-    fun setOnDataClickListener(listener: (Data) -> Unit) {
+    private var onDataClickListener: ((Int) -> Unit)? = null
+    fun setOnDataClickListener(listener: (Int) -> Unit) {
         onDataClickListener = listener
     }
 }

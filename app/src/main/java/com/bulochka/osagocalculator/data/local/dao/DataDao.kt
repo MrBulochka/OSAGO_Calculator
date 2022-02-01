@@ -20,4 +20,7 @@ interface DataDao {
 
     @Update
     suspend fun updateData(data: Data)
+
+    @Update
+    suspend fun updateAllData(listData: List<Data>)
 }

@@ -4,4 +4,5 @@
     <string name="base_coefficients">БТ×КМ×КТ×КБМ×КО×КВС</string>
     <string name="calculate_OSAGO">Рассчитать ОСАГО</string>
     <string name="text_btn_next">Далее</string>
+    <string name="text_btn_confirm">Подтвердить</string>
 </resources>
