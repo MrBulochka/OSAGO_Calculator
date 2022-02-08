@@ -13,22 +13,26 @@ import com.bulochka.osagocalculator.AppApplication
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentBottomSheetBinding
 import com.bulochka.osagocalculator.data.model.Data
-import com.bulochka.osagocalculator.ui.fragments.coefficients.CoefficientsViewModel
-import com.bulochka.osagocalculator.ui.fragments.coefficients.CoefficientsViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class BottomSheetFragment: BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "BottomSheetFragment"
+        const val DATA = "data"
+        const val SELECTED_DATA = "selected_data"
     }
 
     private val bottomSheetViewModel: BottomSheetViewModel by viewModels {
         BottomSheetViewModelFactory((requireActivity().application as AppApplication).repository)
     }
-    private lateinit var binding: FragmentBottomSheetBinding
-    private var dataList = listOf<Data>()
-    private var selectedData: Int = 0
+    private var _binding: FragmentBottomSheetBinding? = null
+    private val binding get() = _binding!!
+
+    private var dataList = mutableListOf<Data>()
+    private var dataIndex: Int = 0
 
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
 
@@ -38,13 +42,24 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
-        dataList = arguments?.getSerializable("data") as List<Data>
+        _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dataList = arguments?.getSerializable(DATA) as MutableList<Data>
 
         initViews()
         setUpClickListeners()
+    }
 
-        return binding.root
+    override fun onStart() {
+        super.onStart()
+        //TODO! не работает
+        (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -56,7 +71,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
     private fun initViews() {
         binding.apply {
             inputData.showKeyboard()
-            selectedData = arguments?.getInt("selected_data")!!
+            dataIndex = requireArguments().getInt(SELECTED_DATA)
             updateView()
         }
     }
@@ -64,13 +79,13 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
     private fun setUpClickListeners() {
         binding.nextBtn.setOnClickListener {
             updateData()
-            selectedData += 1
+            dataIndex += 1
             updateView()
         }
 
         binding.backBtn.setOnClickListener {
             updateData()
-            selectedData -= 1
+            dataIndex -= 1
             updateView()
         }
 
@@ -78,19 +93,25 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
             updateData()
             dismiss()
         }
+
+        binding.crossBtn.setOnClickListener {
+            binding.inputData.setText("")
+        }
     }
 
     private fun updateView() {
         binding.apply {
-            title.text = dataList[selectedData].hint
-            inputData.setText(dataList[selectedData].value)
+            if (dataList.size >= dataIndex) {
+                title.text = dataList[dataIndex].hint
+                inputData.setText(dataList[dataIndex].value)
+            }
             setVisibility()
         }
     }
 
     private fun setVisibility() {
         binding.apply {
-            when (selectedData) {
+            when (dataIndex) {
                 0 -> {
                     nextBtn.visibility = VISIBLE
                     confirmBtn.visibility = INVISIBLE
@@ -111,7 +132,10 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
     }
 
     private fun updateData() {
-        dataList[selectedData].value = binding.inputData.text.toString()
+        val id = dataList[dataIndex].id
+        val hint = dataList[dataIndex].hint
+        val value = binding.inputData.text.toString()
+        dataList[dataIndex] = Data(id, hint, value)
     }
 
     private fun View.showKeyboard() {

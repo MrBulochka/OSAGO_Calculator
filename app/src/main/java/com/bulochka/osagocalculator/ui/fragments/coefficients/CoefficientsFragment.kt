@@ -1,7 +1,6 @@
 package com.bulochka.osagocalculator.ui.fragments.coefficients
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -22,13 +21,14 @@ import com.bulochka.osagocalculator.ui.fragments.bottom_sheet.BottomSheetFragmen
 import com.bulochka.osagocalculator.utils.PixelsConverter
 import java.io.Serializable
 
-class CoefficientsFragment: Fragment(R.layout.fragment_coefficients) {
+class CoefficientsFragment: Fragment() {
 
     private val coefficientsViewModel: CoefficientsViewModel by viewModels {
         CoefficientsViewModelFactory((requireActivity().application as AppApplication).repository)
     }
+    private var _binding: FragmentCoefficientsBinding? = null
+    private val binding get() = _binding!!
 
-    private lateinit var binding: FragmentCoefficientsBinding
     private lateinit var coefficientsAdapter: CoefficientsAdapter
     private lateinit var dataAdapter: DataAdapter
     private var dataList = listOf<Data>()
@@ -38,7 +38,7 @@ class CoefficientsFragment: Fragment(R.layout.fragment_coefficients) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCoefficientsBinding.inflate(inflater, container, false)
+        _binding = FragmentCoefficientsBinding.inflate(inflater, container, false)
 
         initRecyclers()
         setUpObservers()
@@ -66,21 +66,15 @@ class CoefficientsFragment: Fragment(R.layout.fragment_coefficients) {
     private fun setUpClickListeners() {
         binding.apply {
             expandBtn.setOnClickListener {
-                if (coefficientRecycler.visibility == GONE) {
-                    coefficientRecycler.visibility = VISIBLE
-                    expandBtn.setBackgroundResource(R.drawable.ic_hide)
-                } else {
-                    coefficientRecycler.visibility = GONE
-                    expandBtn.setBackgroundResource(R.drawable.ic_open)
-                }
+                val isOpen = coefficientRecycler.visibility == VISIBLE
+                coefficientsViewModel.setCoefficientsState(!isOpen)
             }
         }
 
         dataAdapter.setOnDataClickListener { position ->
             val bundle = Bundle()
-            bundle.putSerializable("data", dataList as Serializable)
-            bundle.putInt("selected_data", position)
-//            bundle.putInt("selected_data", data.id!! - 1)
+            bundle.putSerializable(BottomSheetFragment.DATA, dataList as Serializable)
+            bundle.putInt(BottomSheetFragment.SELECTED_DATA, position)
 
             val dialogFragment = BottomSheetFragment()
             dialogFragment.arguments = bundle
@@ -96,8 +90,11 @@ class CoefficientsFragment: Fragment(R.layout.fragment_coefficients) {
 
         coefficientsViewModel.data.observe(viewLifecycleOwner) { data ->
             dataList = data
-            dataAdapter.submitList(data)
-            Log.d("CoefficientsFragment", "$data")
+            dataAdapter.submitList(data.toList())
+        }
+
+        coefficientsViewModel.coefficientsVisibility.observe(viewLifecycleOwner) {
+            setCoefficientsVisibility(it)
         }
     }
 
@@ -108,6 +105,18 @@ class CoefficientsFragment: Fragment(R.layout.fragment_coefficients) {
                 header += "×${coefficients[i].headerValue}"
             }
             binding.header.text = header
+        }
+    }
+
+    private fun setCoefficientsVisibility(isOpen: Boolean) {
+        binding.apply {
+            if (isOpen) {
+                coefficientRecycler.visibility = VISIBLE
+                expandBtn.setBackgroundResource(R.drawable.ic_hide)
+            } else {
+                coefficientRecycler.visibility = GONE
+                expandBtn.setBackgroundResource(R.drawable.ic_open)
+            }
         }
     }
 }

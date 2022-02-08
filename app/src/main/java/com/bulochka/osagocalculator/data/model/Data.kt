@@ -12,5 +12,5 @@ data class Data (
 
     val hint: String,
 
-    var value: String
+    val value: String
 ): Serializable

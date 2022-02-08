@@ -1,7 +1,6 @@
 package com.bulochka.osagocalculator.ui.adapters
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bulochka.osagocalculator.databinding.ItemDataBinding
 import com.bulochka.osagocalculator.data.model.Data
-import com.bulochka.osagocalculator.utils.PixelsConverter
 
 class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil()) {
 
@@ -49,7 +47,6 @@ class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil())
         }
 
         override fun areContentsTheSame(oldItem: Data, newItem: Data): Boolean {
-            Log.d("DataAdapter", "${oldItem.value}, ${newItem.value}")
             return oldItem == newItem
         }
     }

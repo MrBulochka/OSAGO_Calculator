@@ -10,6 +10,13 @@ class CoefficientsViewModel(repository: Repository) : ViewModel() {
     val coefficients: LiveData<List<Coefficient>> = repository.coefficients.asLiveData()
 
     val data: LiveData<List<Data>> = repository.data.asLiveData()
+
+    private val _coefficientsVisibility = MutableLiveData(false)
+    val coefficientsVisibility: LiveData<Boolean> = _coefficientsVisibility
+
+    fun setCoefficientsState(isOpen: Boolean) {
+        _coefficientsVisibility.value = isOpen
+    }
 }
 
 

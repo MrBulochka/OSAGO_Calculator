@@ -3,7 +3,7 @@
 <resources>
 
     <style name="AppBottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+        parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
         <item name="colorAccent">@color/dark_100</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
