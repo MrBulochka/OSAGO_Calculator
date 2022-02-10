@@ -1,5 +1,6 @@
 package com.bulochka.osagocalculator.data.model
 
+import android.text.InputType
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -12,5 +13,7 @@ data class Data (
 
     val hint: String,
 
-    val value: String
+    val value: String,
+
+    val inputType: Int
 ): Serializable

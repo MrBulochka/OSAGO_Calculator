@@ -5,7 +5,7 @@ import com.bulochka.osagocalculator.data.model.Data
 
 object DataSource {
 
-    val coefficients = listOf(
+    val COEFFICIENTS = listOf(
         Coefficient(
             "БТ",
             "БТ",
@@ -44,12 +44,12 @@ object DataSource {
             "Чем больше возраст и стаж у вписанного в полис водителя, тем дешевле будет полис"),
     )
 
-    val data = listOf(
-        Data(null, "Город регистрации собственника", ""),
-        Data(null, "Мощность автомобиля", ""),
-        Data(null, "Сколько водителей", ""),
-        Data(null, "Возраст младшего из водителей", ""),
-        Data(null, "Минимальный стаж водителей", ""),
-        Data(null, "Сколько лет не было аварий", ""),
+    val DATA = listOf(
+        Data(null, "Город регистрации собственника", "", 1),
+        Data(null, "Мощность автомобиля", "", 3),
+        Data(null, "Сколько водителей", "", 3),
+        Data(null, "Возраст младшего из водителей", "", 1),
+        Data(null, "Минимальный стаж водителей", "", 1),
+        Data(null, "Сколько лет не было аварий", "", 3),
     )
 }

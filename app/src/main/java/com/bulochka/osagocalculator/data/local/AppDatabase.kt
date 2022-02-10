@@ -52,8 +52,8 @@ abstract class AppDatabase: RoomDatabase() {
                     val coefficientDao = database.coefficientDao()
                     val dataDao = database.dataDao()
 
-                    coefficientDao.insertCoefficients(DataSource.coefficients)
-                    dataDao.insertData(DataSource.data)
+                    coefficientDao.insertCoefficients(DataSource.COEFFICIENTS)
+                    dataDao.insertData(DataSource.DATA)
                 }
             }
         }

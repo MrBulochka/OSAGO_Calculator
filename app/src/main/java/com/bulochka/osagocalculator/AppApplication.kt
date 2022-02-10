@@ -1,15 +1,19 @@
 package com.bulochka.osagocalculator
 
 import android.app.Application
-import com.bulochka.osagocalculator.data.local.AppDatabase
-import com.bulochka.osagocalculator.repository.Repository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import com.bulochka.osagocalculator.di.appModule
+import com.bulochka.osagocalculator.di.localModule
+import com.bulochka.osagocalculator.di.networkModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class AppApplication : Application() {
 
-    val applicationScope = CoroutineScope(SupervisorJob())
-
-    val database by lazy { AppDatabase.getDatabase(this, applicationScope) }
-    val repository by lazy { Repository(database.coefficientDao(), database.dataDao()) }
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@AppApplication)
+            modules(listOf(appModule, localModule, networkModule))
+        }
+    }
 }

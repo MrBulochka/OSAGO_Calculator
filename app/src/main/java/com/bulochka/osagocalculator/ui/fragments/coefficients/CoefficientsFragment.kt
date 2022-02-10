@@ -7,8 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.bulochka.osagocalculator.AppApplication
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentCoefficientsBinding
 import com.bulochka.osagocalculator.data.model.Coefficient
@@ -23,9 +22,8 @@ import java.io.Serializable
 
 class CoefficientsFragment: Fragment() {
 
-    private val coefficientsViewModel: CoefficientsViewModel by viewModels {
-        CoefficientsViewModelFactory((requireActivity().application as AppApplication).repository)
-    }
+    private val coefficientsViewModel: CoefficientsViewModel by viewModel()
+
     private var _binding: FragmentCoefficientsBinding? = null
     private val binding get() = _binding!!
 

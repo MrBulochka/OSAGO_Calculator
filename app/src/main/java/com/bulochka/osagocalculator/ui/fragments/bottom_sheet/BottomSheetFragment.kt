@@ -8,8 +8,7 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.viewModels
-import com.bulochka.osagocalculator.AppApplication
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentBottomSheetBinding
 import com.bulochka.osagocalculator.data.model.Data
@@ -25,9 +24,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
         const val SELECTED_DATA = "selected_data"
     }
 
-    private val bottomSheetViewModel: BottomSheetViewModel by viewModels {
-        BottomSheetViewModelFactory((requireActivity().application as AppApplication).repository)
-    }
+    private val bottomSheetViewModel: BottomSheetViewModel by viewModel()
     private var _binding: FragmentBottomSheetBinding? = null
     private val binding get() = _binding!!
 
@@ -51,6 +48,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dataList = arguments?.getSerializable(DATA) as MutableList<Data>
+        dataIndex = requireArguments().getInt(SELECTED_DATA)
 
         initViews()
         setUpClickListeners()
@@ -70,9 +68,8 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
 
     private fun initViews() {
         binding.apply {
-            inputData.showKeyboard()
-            dataIndex = requireArguments().getInt(SELECTED_DATA)
             updateView()
+            inputData.showKeyboard()
         }
     }
 
@@ -104,6 +101,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
             if (dataList.size >= dataIndex) {
                 title.text = dataList[dataIndex].hint
                 inputData.setText(dataList[dataIndex].value)
+                inputData.inputType = dataList[dataIndex].inputType
             }
             setVisibility()
         }
@@ -135,7 +133,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
         val id = dataList[dataIndex].id
         val hint = dataList[dataIndex].hint
         val value = binding.inputData.text.toString()
-        dataList[dataIndex] = Data(id, hint, value)
+        dataList[dataIndex] = Data(id, hint, value, binding.inputData.inputType)
     }
 
     private fun View.showKeyboard() {
