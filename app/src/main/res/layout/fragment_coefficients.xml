@@ -75,9 +75,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/some_text"
                 app:layout_constraintBottom_toBottomOf="@+id/some_icon"
-                android:text="@string/base_header"
                 android:textSize="16sp"
-                android:textColor="@color/blue_100" />
+                android:textColor="@color/blue_100"
+                tools:text="@string/base_header"/>
 
             <ImageButton
                 android:id="@+id/expand_btn"
@@ -139,6 +139,7 @@
         tools:ignore="MissingConstraints" >
 
         <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:elevation="10dp"

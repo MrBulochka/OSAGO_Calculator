@@ -3,8 +3,7 @@ package com.bulochka.osagocalculator.ui.fragments.coefficients
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -12,6 +11,7 @@ import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentCoefficientsBinding
 import com.bulochka.osagocalculator.data.model.Coefficient
 import com.bulochka.osagocalculator.data.model.Data
+import com.bulochka.osagocalculator.data.model.SendData
 import com.bulochka.osagocalculator.ui.adapters.CoefficientsAdapter
 import com.bulochka.osagocalculator.ui.adapters.CoefficientsItemDecoration
 import com.bulochka.osagocalculator.ui.adapters.DataAdapter
@@ -70,13 +70,7 @@ class CoefficientsFragment: Fragment() {
         }
 
         dataAdapter.setOnDataClickListener { position ->
-            val bundle = Bundle()
-            bundle.putSerializable(BottomSheetFragment.DATA, dataList as Serializable)
-            bundle.putInt(BottomSheetFragment.SELECTED_DATA, position)
-
-            val dialogFragment = BottomSheetFragment()
-            dialogFragment.arguments = bundle
-            dialogFragment.show(requireActivity().supportFragmentManager, BottomSheetFragment.TAG)
+            showBottomSheet(position)
         }
     }
 
@@ -84,6 +78,8 @@ class CoefficientsFragment: Fragment() {
         coefficientsViewModel.coefficients.observe(viewLifecycleOwner) { coefficients ->
             coefficientsAdapter.submitList(coefficients)
             updateHeader(coefficients)
+            binding.progressBar.visibility = INVISIBLE
+            binding.calculateBtn.setText(R.string.calculate_OSAGO)
         }
 
         coefficientsViewModel.data.observe(viewLifecycleOwner) { data ->
@@ -116,5 +112,28 @@ class CoefficientsFragment: Fragment() {
                 expandBtn.setBackgroundResource(R.drawable.ic_open)
             }
         }
+    }
+
+    private fun showBottomSheet(position: Int) {
+        val bundle = Bundle()
+        bundle.putSerializable(BottomSheetFragment.DATA, dataList as Serializable)
+        bundle.putInt(BottomSheetFragment.SELECTED_DATA, position)
+
+        val dialogFragment = BottomSheetFragment()
+        dialogFragment.arguments = bundle
+        dialogFragment.show(requireActivity().supportFragmentManager, BottomSheetFragment.TAG)
+
+        setDismissListener(dialogFragment)
+    }
+
+    private fun setDismissListener(dialogFragment: BottomSheetFragment) {
+        requireActivity().supportFragmentManager.executePendingTransactions()
+        dialogFragment.dialog?.setOnDismissListener {
+            coefficientsViewModel.postData(SendData(dataList))
+            binding.progressBar.visibility = VISIBLE
+            binding.calculateBtn.text = ""
+            dialogFragment.dismiss()
+        }
+
     }
 }

@@ -16,5 +16,5 @@ interface CoefficientDao {
     suspend fun insertCoefficients(coefficients: List<Coefficient>)
 
     @Update
-    suspend fun updateCoefficient(coefficient: Coefficient)
+    suspend fun updateAllCoefficients(coefficient: List<Coefficient>)
 }

@@ -8,7 +8,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 
 val appModule = module {
 
-    single { CoefficientsRepository(get(), get()) }
+    single { CoefficientsRepository(get(), get(), get()) }
     viewModel { CoefficientsViewModel(get()) }
     viewModel { BottomSheetViewModel(get()) }
 }
