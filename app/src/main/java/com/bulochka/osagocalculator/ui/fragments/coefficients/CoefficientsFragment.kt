@@ -85,6 +85,7 @@ class CoefficientsFragment: Fragment() {
         coefficientsViewModel.data.observe(viewLifecycleOwner) { data ->
             dataList = data
             dataAdapter.submitList(data.toList())
+            updateCalculateButton()
         }
 
         coefficientsViewModel.coefficientsVisibility.observe(viewLifecycleOwner) {
@@ -134,6 +135,23 @@ class CoefficientsFragment: Fragment() {
             binding.calculateBtn.text = ""
             dialogFragment.dismiss()
         }
+    }
 
+    private fun updateCalculateButton() {
+        var isActive = true
+        for (data in dataList)
+            if (data.value.isEmpty())
+                isActive = false
+        binding.calculateBtn.apply {
+            if (isActive) {
+                setBackgroundResource(R.drawable.button_active)
+                isClickable = true
+                setTextColor(resources.getColor(R.color.white))
+            } else {
+                setBackgroundResource(R.drawable.button_inactive)
+                isClickable = false
+                setTextColor(resources.getColor(R.color.main_20))
+            }
+        }
     }
 }
