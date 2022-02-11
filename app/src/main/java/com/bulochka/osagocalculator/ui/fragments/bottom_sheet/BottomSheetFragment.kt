@@ -2,6 +2,7 @@ package com.bulochka.osagocalculator.ui.fragments.bottom_sheet
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,11 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
 
         _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
 
+        // Шторка расширяется только с minHeight, других способов я не нашел
+        // по идее тут надо еще считать высоту клавиатуры, чтобы размер шторки был как в макете
+        binding.root.minHeight = (Resources.getSystem().displayMetrics.heightPixels)/2
+        (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
+
         return binding.root
     }
 
@@ -52,12 +58,6 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
 
         initViews()
         setUpClickListeners()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        //TODO! не работает
-        (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override fun onDismiss(dialog: DialogInterface) {
