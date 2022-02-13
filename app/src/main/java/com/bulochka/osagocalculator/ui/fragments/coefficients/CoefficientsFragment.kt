@@ -83,6 +83,7 @@ class CoefficientsFragment: Fragment() {
             updateHeader(coefficients)
             binding.progressBar.visibility = INVISIBLE
             binding.calculateBtn.setText(R.string.calculate_OSAGO)
+            updateCalculateButton()
         }
 
         coefficientsViewModel.data.observe(viewLifecycleOwner) { data ->
@@ -127,14 +128,17 @@ class CoefficientsFragment: Fragment() {
         dialogFragment.show(requireActivity().supportFragmentManager, BottomSheetFragment.TAG)
 
         setDismissListener(dialogFragment)
+        // не обрабатывается событие при вызове "dismiss" (клик на кнопку "продолжить")
+        // в BottomSheetFragment
     }
 
     private fun setDismissListener(dialogFragment: BottomSheetFragment) {
         requireActivity().supportFragmentManager.executePendingTransactions()
         dialogFragment.dialog?.setOnDismissListener {
             coefficientsViewModel.postData(SendData(dataList))
-            binding.progressBar.visibility = VISIBLE
             binding.calculateBtn.text = ""
+            binding.calculateBtn.setBackgroundResource(R.drawable.button_inactive)
+            binding.progressBar.visibility = VISIBLE
             dialogFragment.dismiss()
         }
     }

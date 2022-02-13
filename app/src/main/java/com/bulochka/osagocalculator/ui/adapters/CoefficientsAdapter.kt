@@ -27,10 +27,9 @@ class CoefficientsAdapter: ListAdapter<Coefficient, CoefficientsAdapter.Coeffici
             binding.apply {
                 textTitle.text = coefficient.title
                 textValue.text = coefficient.value
-                textName.text = coefficient.name
+                textName.text = "(${coefficient.name})"
                 textDetail.text = coefficient.detailText
             }
-
         }
     }
 
