@@ -10,7 +10,15 @@
         android:name="com.bulochka.osagocalculator.ui.fragments.coefficients.CoefficientsFragment"
         android:label="Калькулятор ОСАГО"
         tools:layout="@layout/fragment_coefficients">
+        <action android:id="@+id/action_coefficients_to_price"
+            app:destination="@+id/price"/>
+    </fragment>
 
+    <fragment
+        android:id="@+id/price"
+        android:name="com.bulochka.osagocalculator.ui.fragments.price.PriceFragment"
+        android:label="Рассчет цены полиса"
+        tools:layout="@layout/fragment_price">
     </fragment>
 
 </navigation>

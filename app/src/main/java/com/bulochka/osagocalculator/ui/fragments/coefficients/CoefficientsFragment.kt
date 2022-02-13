@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentCoefficientsBinding
@@ -46,7 +47,7 @@ class CoefficientsFragment: Fragment() {
     }
 
     private fun initRecyclers() {
-        binding.coefficientRecycler.apply {
+        binding.coefficients.coefficientRecycler.apply {
             coefficientsAdapter = CoefficientsAdapter()
             adapter = coefficientsAdapter
             val spacing = PixelsConverter.convertDpToPx(context, 16f)
@@ -62,15 +63,17 @@ class CoefficientsFragment: Fragment() {
     }
 
     private fun setUpClickListeners() {
-        binding.apply {
-            expandBtn.setOnClickListener {
-                val isOpen = coefficientRecycler.visibility == VISIBLE
-                coefficientsViewModel.setCoefficientsState(!isOpen)
-            }
+        binding.coefficients.expandBtn.setOnClickListener {
+            val isOpen = binding.coefficients.coefficientRecycler.visibility == VISIBLE
+            coefficientsViewModel.setCoefficientsState(!isOpen)
         }
 
         dataAdapter.setOnDataClickListener { position ->
             showBottomSheet(position)
+        }
+
+        binding.calculateBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_coefficients_to_price)
         }
     }
 
@@ -85,7 +88,6 @@ class CoefficientsFragment: Fragment() {
         coefficientsViewModel.data.observe(viewLifecycleOwner) { data ->
             dataList = data
             dataAdapter.submitList(data.toList())
-            updateCalculateButton()
         }
 
         coefficientsViewModel.coefficientsVisibility.observe(viewLifecycleOwner) {
@@ -99,12 +101,12 @@ class CoefficientsFragment: Fragment() {
             for (i in 1 until coefficients.size) {
                 header += "×${coefficients[i].headerValue}"
             }
-            binding.header.text = header
+            binding.coefficients.header.text = header
         }
     }
 
     private fun setCoefficientsVisibility(isOpen: Boolean) {
-        binding.apply {
+        binding.coefficients.apply {
             if (isOpen) {
                 coefficientRecycler.visibility = VISIBLE
                 expandBtn.setBackgroundResource(R.drawable.ic_hide)

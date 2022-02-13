@@ -5,4 +5,5 @@
     <string name="calculate_OSAGO">Рассчитать ОСАГО</string>
     <string name="text_btn_next">Далее</string>
     <string name="text_btn_confirm">Подтвердить</string>
+    <string name="calculate_and_buy_btn_text">Рассчитать точную цену и купить</string>
 </resources>
