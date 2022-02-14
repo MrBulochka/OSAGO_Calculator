@@ -1,5 +1,6 @@
 package com.bulochka.osagocalculator.ui.fragments.coefficients
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -125,7 +126,7 @@ class CoefficientsFragment: Fragment() {
 
         val dialogFragment = BottomSheetFragment()
         dialogFragment.arguments = bundle
-        dialogFragment.show(requireActivity().supportFragmentManager, BottomSheetFragment.TAG)
+        dialogFragment.show(childFragmentManager, BottomSheetFragment.TAG)
 
         setDismissListener(dialogFragment)
         // не обрабатывается событие при вызове "dismiss" (клик на кнопку "продолжить")
@@ -133,7 +134,7 @@ class CoefficientsFragment: Fragment() {
     }
 
     private fun setDismissListener(dialogFragment: BottomSheetFragment) {
-        requireActivity().supportFragmentManager.executePendingTransactions()
+        childFragmentManager.executePendingTransactions()
         dialogFragment.dialog?.setOnDismissListener {
             coefficientsViewModel.postData(SendData(dataList))
             binding.calculateBtn.text = ""
