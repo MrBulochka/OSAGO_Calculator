@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Калькулятор ОСАГО</string>
+    <string name="app_name">Калькулятор ОСАГО repo5</string>
     <string name="your_coefficients">Ваши коэффициенты</string>
     <string name="base_header">БТ×КМ×КТ×КБМ×КО×КВС</string>
     <string name="calculate_OSAGO">Рассчитать ОСАГО</string>
