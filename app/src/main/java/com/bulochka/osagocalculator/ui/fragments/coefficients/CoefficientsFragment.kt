@@ -1,6 +1,5 @@
 package com.bulochka.osagocalculator.ui.fragments.coefficients
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,6 @@ import com.bulochka.osagocalculator.ui.adapters.DataAdapter
 import com.bulochka.osagocalculator.ui.adapters.DataItemDecoration
 import com.bulochka.osagocalculator.ui.fragments.bottom_sheet.BottomSheetFragment
 import com.bulochka.osagocalculator.utils.PixelsConverter
-import java.io.Serializable
 
 class CoefficientsFragment: Fragment() {
 
@@ -42,7 +40,7 @@ class CoefficientsFragment: Fragment() {
 
         initRecyclers()
         setUpObservers()
-        setUpClickListeners()
+        setUpListeners()
 
         return binding.root
     }
@@ -63,7 +61,9 @@ class CoefficientsFragment: Fragment() {
         }
     }
 
-    private fun setUpClickListeners() {
+    private fun setUpListeners() {
+        setUpBottomSheetListener()
+
         binding.coefficients.expandBtn.setOnClickListener {
             val isOpen = binding.coefficients.coefficientRecycler.visibility == VISIBLE
             coefficientsViewModel.setCoefficientsState(!isOpen)
@@ -119,31 +119,6 @@ class CoefficientsFragment: Fragment() {
         }
     }
 
-    private fun showBottomSheet(position: Int) {
-        val bundle = Bundle()
-        bundle.putSerializable(BottomSheetFragment.DATA, dataList as Serializable)
-        bundle.putInt(BottomSheetFragment.SELECTED_DATA, position)
-
-        val dialogFragment = BottomSheetFragment()
-        dialogFragment.arguments = bundle
-        dialogFragment.show(childFragmentManager, BottomSheetFragment.TAG)
-
-        setDismissListener(dialogFragment)
-        // не обрабатывается событие при вызове "dismiss" (клик на кнопку "продолжить")
-        // в BottomSheetFragment
-    }
-
-    private fun setDismissListener(dialogFragment: BottomSheetFragment) {
-        childFragmentManager.executePendingTransactions()
-        dialogFragment.dialog?.setOnDismissListener {
-            coefficientsViewModel.postData(SendData(dataList))
-            binding.calculateBtn.text = ""
-            binding.calculateBtn.setBackgroundResource(R.drawable.button_inactive)
-            binding.progressBar.visibility = VISIBLE
-            dialogFragment.dismiss()
-        }
-    }
-
     private fun updateCalculateButton() {
         var isActive = true
         for (data in dataList)
@@ -158,6 +133,22 @@ class CoefficientsFragment: Fragment() {
                 setBackgroundResource(R.drawable.button_inactive)
                 isClickable = false
                 setTextColor(resources.getColor(R.color.main_20))
+            }
+        }
+    }
+
+    private fun showBottomSheet(position: Int) {
+        BottomSheetFragment.show(requireActivity().supportFragmentManager, position, dataList)
+    }
+
+    private fun setUpBottomSheetListener() {
+        BottomSheetFragment.setUpListener(requireActivity().supportFragmentManager, this) {
+            coefficientsViewModel.updateAllData(it)
+            coefficientsViewModel.postData(SendData(it))
+            binding.apply {
+                calculateBtn.text = ""
+                calculateBtn.setBackgroundResource(R.drawable.button_inactive)
+                progressBar.visibility = VISIBLE
             }
         }
     }

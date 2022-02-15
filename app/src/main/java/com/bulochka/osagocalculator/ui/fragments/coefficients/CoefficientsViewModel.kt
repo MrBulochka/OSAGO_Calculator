@@ -31,6 +31,12 @@ class CoefficientsViewModel(private val coefficientsRepository: CoefficientsRepo
         }
     }
 
+    fun updateAllData(listData: List<Data>) {
+        viewModelScope.launch {
+            coefficientsRepository.updateAllData(listData)
+        }
+    }
+
     private fun updateCoefficients(coefficients: List<Coefficient>) {
         viewModelScope.launch {
             coefficientsRepository.updateAllCoefficients(coefficients)

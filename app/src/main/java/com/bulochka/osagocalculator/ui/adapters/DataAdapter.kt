@@ -3,6 +3,7 @@ package com.bulochka.osagocalculator.ui.adapters
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -36,6 +37,9 @@ class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil())
                 if (data.value.isNotEmpty()) {
                     hint.textSize = 14f
                     value.visibility = VISIBLE
+                } else {
+                    value.visibility = GONE
+                    hint.textSize = 16f
                 }
             }
         }

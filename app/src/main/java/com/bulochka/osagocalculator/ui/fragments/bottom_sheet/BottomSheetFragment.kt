@@ -9,6 +9,9 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentBottomSheetBinding
@@ -19,17 +22,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class BottomSheetFragment: BottomSheetDialogFragment() {
 
-    companion object {
-        const val TAG = "BottomSheetFragment"
-        const val DATA = "data"
-        const val SELECTED_DATA = "selected_data"
-    }
-
-    private val bottomSheetViewModel: BottomSheetViewModel by viewModel()
     private var _binding: FragmentBottomSheetBinding? = null
     private val binding get() = _binding!!
 
-    private var dataList = mutableListOf<Data>()
+    private val dataList get() = requireArguments().getSerializable(DATA) as MutableList<Data>
+    private val selectedData get() = requireArguments().getInt(SELECTED_DATA)
+
     private var dataIndex: Int = 0
 
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
@@ -42,8 +40,6 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
 
         _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
 
-        // Шторка расширяется только с minHeight, других способов я не нашел
-        // по идее тут надо еще считать высоту клавиатуры, чтобы размер шторки был как в макете
         binding.root.minHeight = (Resources.getSystem().displayMetrics.heightPixels)/2
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
@@ -53,8 +49,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataList = arguments?.getSerializable(DATA) as MutableList<Data>
-        dataIndex = requireArguments().getInt(SELECTED_DATA)
+        dataIndex = savedInstanceState?.getInt(SELECTED_DATA) ?: selectedData
 
         initViews()
         setUpClickListeners()
@@ -63,7 +58,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         updateData()
-        bottomSheetViewModel.updateAllData(dataList)
+        parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf(DATA to dataList))
     }
 
     private fun initViews() {
@@ -141,5 +136,40 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
         val inputMethodManager =
             context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    companion object {
+        private const val TAG = "BottomSheetFragment"
+        const val REQUEST_KEY = "REQUEST_DATA"
+        const val DATA = "data"
+        const val SELECTED_DATA = "selected_data"
+
+
+        fun show(manager: FragmentManager, selectedData: Int, dataList: List<Data>) {
+            val dialogFragment = BottomSheetFragment()
+            dialogFragment.arguments = bundleOf(
+                SELECTED_DATA to selectedData,
+                DATA to dataList
+            )
+            dialogFragment.show(manager, TAG)
+        }
+
+        fun setUpListener(
+            manager: FragmentManager,
+            lifecycleOwner: LifecycleOwner,
+            listener: (List<Data>) -> Unit
+        ) {
+            manager.setFragmentResultListener(
+                REQUEST_KEY,
+                lifecycleOwner,
+                { _, result ->
+                    listener.invoke(result.getSerializable(DATA) as List<Data>)
+                })
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(SELECTED_DATA, dataIndex)
     }
 }
