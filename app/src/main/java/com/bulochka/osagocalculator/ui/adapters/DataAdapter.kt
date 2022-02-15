@@ -1,8 +1,6 @@
 package com.bulochka.osagocalculator.ui.adapters
 
-import android.graphics.Rect
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -58,19 +56,5 @@ class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil())
     private var onDataClickListener: ((Int) -> Unit)? = null
     fun setOnDataClickListener(listener: (Int) -> Unit) {
         onDataClickListener = listener
-    }
-}
-
-class DataItemDecoration(private val spacing: Int):
-    RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view)
-        if (position > 0)
-            outRect.top = spacing
     }
 }

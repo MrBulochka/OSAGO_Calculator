@@ -1,8 +1,6 @@
 package com.bulochka.osagocalculator.ui.adapters
 
-import android.graphics.Rect
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -41,19 +39,5 @@ class CoefficientsAdapter: ListAdapter<Coefficient, CoefficientsAdapter.Coeffici
         override fun areContentsTheSame(oldItem: Coefficient, newItem: Coefficient): Boolean {
             return oldItem == newItem
         }
-    }
-}
-
-class CoefficientsItemDecoration(private val spacing: Int):
-    RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        outRect.left = spacing
-        outRect.right = spacing
-        outRect.top = spacing
     }
 }

@@ -14,11 +14,8 @@ import com.bulochka.osagocalculator.data.model.Coefficient
 import com.bulochka.osagocalculator.data.model.Data
 import com.bulochka.osagocalculator.data.model.SendData
 import com.bulochka.osagocalculator.ui.adapters.CoefficientsAdapter
-import com.bulochka.osagocalculator.ui.adapters.CoefficientsItemDecoration
 import com.bulochka.osagocalculator.ui.adapters.DataAdapter
-import com.bulochka.osagocalculator.ui.adapters.DataItemDecoration
 import com.bulochka.osagocalculator.ui.fragments.bottom_sheet.BottomSheetFragment
-import com.bulochka.osagocalculator.utils.PixelsConverter
 
 class CoefficientsFragment: Fragment() {
 
@@ -49,15 +46,11 @@ class CoefficientsFragment: Fragment() {
         binding.coefficients.coefficientRecycler.apply {
             coefficientsAdapter = CoefficientsAdapter()
             adapter = coefficientsAdapter
-            val spacing = PixelsConverter.convertDpToPx(context, 16f)
-            addItemDecoration(CoefficientsItemDecoration(spacing))
         }
 
         binding.dataRecycler.apply {
             dataAdapter = DataAdapter()
             adapter = dataAdapter
-            val spacing = PixelsConverter.convertDpToPx(context, 12f)
-            addItemDecoration(DataItemDecoration(spacing))
         }
     }
 
