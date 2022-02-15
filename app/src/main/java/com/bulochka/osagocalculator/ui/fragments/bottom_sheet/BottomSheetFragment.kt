@@ -12,7 +12,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentBottomSheetBinding
 import com.bulochka.osagocalculator.data.model.Data

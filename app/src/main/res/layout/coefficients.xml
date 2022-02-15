@@ -50,15 +50,17 @@
         android:textColor="@color/blue_100"
         tools:text="@string/base_header"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/expand_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintTop_toTopOf="@id/some_icon"
         app:layout_constraintBottom_toBottomOf="@id/some_icon"
         app:layout_constraintEnd_toEndOf="@id/coefficient_cardView"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/ic_open"/>
+        android:layout_marginEnd="8dp"
+        android:scaleType="center"
+        android:background="@color/white"
+        android:src="@drawable/ic_open"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/coefficient_recycler"

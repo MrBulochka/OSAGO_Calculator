@@ -57,16 +57,17 @@
         android:textSize="17sp"
         android:backgroundTint="@android:color/transparent" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/cross_btn"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="@id/input_view"
         app:layout_constraintTop_toTopOf="@id/input_view"
         app:layout_constraintBottom_toBottomOf="@id/input_view"
         app:layout_constraintStart_toEndOf="@id/input_data"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_cross"/>
+        android:layout_marginEnd="6dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_cross"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next_btn"

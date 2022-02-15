@@ -111,10 +111,10 @@ class CoefficientsFragment: Fragment() {
         binding.coefficients.apply {
             if (isOpen) {
                 coefficientRecycler.visibility = VISIBLE
-                expandBtn.setBackgroundResource(R.drawable.ic_hide)
+                expandBtn.setImageResource(R.drawable.ic_hide)
             } else {
                 coefficientRecycler.visibility = GONE
-                expandBtn.setBackgroundResource(R.drawable.ic_open)
+                expandBtn.setImageResource(R.drawable.ic_open)
             }
         }
     }
