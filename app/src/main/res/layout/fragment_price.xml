@@ -52,7 +52,8 @@
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"
                 android:layout_gravity="center"
                 android:orientation="vertical"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="24dp"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -77,7 +78,9 @@
                 app:layout_constraintTop_toBottomOf="@id/coefficients"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_offer"
                 android:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -91,16 +94,6 @@
         android:layout_gravity="bottom"
         tools:ignore="MissingConstraints" >
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:elevation="10dp"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="30dp"
-            android:indeterminateTint="@color/blue_100"
-            android:visibility="invisible"/>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/calculate_btn"
             android:layout_width="match_parent"
@@ -109,9 +102,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_gravity="top"
-            android:background="@drawable/button_active"
+            android:background="@drawable/button_inactive"
+            android:clickable="false"
             android:text="@string/calculate_and_buy_btn_text"
-            android:textColor="@color/white"
+            android:textColor="@color/main_20"
             android:textAllCaps="false">
         </androidx.appcompat.widget.AppCompatButton>
     </FrameLayout>

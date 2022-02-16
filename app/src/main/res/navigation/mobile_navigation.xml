@@ -19,6 +19,9 @@
         android:name="com.bulochka.osagocalculator.ui.fragments.price.PriceFragment"
         android:label="Рассчет цены полиса"
         tools:layout="@layout/fragment_price">
+        <argument
+            android:name="coefficients"
+            app:argType="com.bulochka.osagocalculator.data.model.CoefficientsResponse" />
     </fragment>
 
 </navigation>

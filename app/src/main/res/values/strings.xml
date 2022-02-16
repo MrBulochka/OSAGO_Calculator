@@ -6,4 +6,58 @@
     <string name="text_btn_next">Далее</string>
     <string name="text_btn_confirm">Подтвердить</string>
     <string name="calculate_and_buy_btn_text">Рассчитать точную цену и купить</string>
+    <string name="city_of_registration">Город регистрации собственника</string>
+    <string name="car_power">Мощность автомобиля</string>
+    <string name="how_many_drivers">Сколько водителей</string>
+    <string name="age_of_youngest_driver">Возраст младшего из водителей</string>
+    <string name="minimum_driving_experience">Минимальный стаж водителей</string>
+    <string name="how_years_no_accidents">Сколько лет не было аварий</string>
+
+    <string-array name="coefficient_BT">
+        <item>БТ</item>
+        <item>БТ</item>
+        <item>2 754 – 4 432 ₽</item>
+        <item>базовый тариф</item>
+        <item>Устанавливает страховая компания</item>
+    </string-array>
+
+    <string-array name="coefficient_KM">
+        <item>КМ</item>
+        <item>КМ</item>
+        <item>0,6 – 1,6</item>
+        <item>коэфф. мощности</item>
+        <item>Чем мощнее автомобиль, тем дороже страховой полис</item>
+    </string-array>
+
+    <string-array name="coefficient_KT">
+        <item>КТ</item>
+        <item>КТ</item>
+        <item>0,64 – 1,99</item>
+        <item>территориальный коэфф.</item>
+        <item>Определяется по прописке собственника автомобиля</item>
+    </string-array>
+
+    <string-array name="coefficient_KBM">
+        <item>КБМ</item>
+        <item>КБМ</item>
+        <item>0,5 – 2,45</item>
+        <item>коэфф. безаварийности</item>
+        <item>Учитывается только самый высокий коэффициент из всех водителей</item>
+    </string-array>
+
+    <string-array name="coefficient_KO">
+        <item>КО</item>
+        <item>КО</item>
+        <item>1 или 1,99</item>
+        <item>коэфф. ограничений</item>
+        <item>Полис с ограниченным списком водителей будет стоить дешевле</item>
+    </string-array>
+
+    <string-array name="coefficient_KVS">
+        <item>КВС</item>
+        <item>КВС</item>
+        <item>0,90 – 1,93</item>
+        <item>коэфф. возраст/стаж</item>
+        <item>Чем больше возраст и стаж у вписанного в полис водителя, тем дешевле будет полис</item>
+    </string-array>
 </resources>

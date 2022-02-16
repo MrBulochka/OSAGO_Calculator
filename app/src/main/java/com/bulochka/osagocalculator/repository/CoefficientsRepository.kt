@@ -2,10 +2,7 @@ package com.bulochka.osagocalculator.repository
 
 import com.bulochka.osagocalculator.data.local.dao.CoefficientDao
 import com.bulochka.osagocalculator.data.local.dao.DataDao
-import com.bulochka.osagocalculator.data.model.Coefficient
-import com.bulochka.osagocalculator.data.model.CoefficientsResponse
-import com.bulochka.osagocalculator.data.model.Data
-import com.bulochka.osagocalculator.data.model.SendData
+import com.bulochka.osagocalculator.data.model.*
 import com.bulochka.osagocalculator.data.remote.OsagoApiService
 import kotlinx.coroutines.flow.Flow
 
@@ -26,5 +23,9 @@ class CoefficientsRepository(private val coefficientDao: CoefficientDao,
 
     suspend fun postData(data: SendData): CoefficientsResponse {
         return osagoApiService.postData(data)
+    }
+
+    suspend fun postCoefficients(coefficients: SendCoefficients): OffersResponse {
+        return osagoApiService.postCoefficients(coefficients)
     }
 }

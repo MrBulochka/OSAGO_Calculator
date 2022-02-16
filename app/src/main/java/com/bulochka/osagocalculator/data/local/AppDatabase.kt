@@ -33,7 +33,7 @@ abstract class AppDatabase: RoomDatabase() {
                     AppDatabase::class.java,
                     "App database"
                 )
-                    .addCallback(AppDatabaseCallBack(scope))
+                    .addCallback(AppDatabaseCallBack(scope, context))
                     .build()
                 INSTANCE = instance
 
@@ -42,7 +42,8 @@ abstract class AppDatabase: RoomDatabase() {
         }
     }
     private class AppDatabaseCallBack(
-        private val scope: CoroutineScope
+        private val scope: CoroutineScope,
+        private val context: Context
     ): RoomDatabase.Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
@@ -52,8 +53,8 @@ abstract class AppDatabase: RoomDatabase() {
                     val coefficientDao = database.coefficientDao()
                     val dataDao = database.dataDao()
 
-                    coefficientDao.insertCoefficients(DataSource.COEFFICIENTS)
-                    dataDao.insertData(DataSource.DATA)
+                    coefficientDao.insertCoefficients(DataSource(context).COEFFICIENTS)
+                    dataDao.insertData(DataSource(context).DATA)
                 }
             }
         }

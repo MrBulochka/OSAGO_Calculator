@@ -11,6 +11,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.databinding.FragmentCoefficientsBinding
 import com.bulochka.osagocalculator.data.model.Coefficient
+import com.bulochka.osagocalculator.data.model.CoefficientsResponse
 import com.bulochka.osagocalculator.data.model.Data
 import com.bulochka.osagocalculator.data.model.SendData
 import com.bulochka.osagocalculator.ui.adapters.CoefficientsAdapter
@@ -27,6 +28,7 @@ class CoefficientsFragment: Fragment() {
     private lateinit var coefficientsAdapter: CoefficientsAdapter
     private lateinit var dataAdapter: DataAdapter
     private var dataList = listOf<Data>()
+    private var coefficients = listOf<Coefficient>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,22 +69,25 @@ class CoefficientsFragment: Fragment() {
         }
 
         binding.calculateBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_coefficients_to_price)
+            val bundle = Bundle()
+            bundle.putSerializable("coefficients", CoefficientsResponse(coefficients))
+            findNavController().navigate(R.id.action_coefficients_to_price, bundle)
         }
     }
 
     private fun setUpObservers() {
-        coefficientsViewModel.coefficients.observe(viewLifecycleOwner) { coefficients ->
+        coefficientsViewModel.data.observe(viewLifecycleOwner) { data ->
+            dataList = data
+            dataAdapter.submitList(data.toList())
+        }
+
+        coefficientsViewModel.coefficients.observe(viewLifecycleOwner) {
+            coefficients = it
             coefficientsAdapter.submitList(coefficients)
             updateHeader(coefficients)
             binding.progressBar.visibility = INVISIBLE
             binding.calculateBtn.setText(R.string.calculate_OSAGO)
             updateCalculateButton()
-        }
-
-        coefficientsViewModel.data.observe(viewLifecycleOwner) { data ->
-            dataList = data
-            dataAdapter.submitList(data.toList())
         }
 
         coefficientsViewModel.coefficientsVisibility.observe(viewLifecycleOwner) {
