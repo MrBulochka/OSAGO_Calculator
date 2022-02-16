@@ -23,7 +23,11 @@ class PriceViewModel(private val coefficientsRepository: CoefficientsRepository)
 
     fun postCoefficients(coefficients: SendCoefficients) {
         viewModelScope.launch {
-            _offersResponse.value = coefficientsRepository.postCoefficients(coefficients)
+            try {
+                _offersResponse.value = coefficientsRepository.postCoefficients(coefficients)
+            } catch (e: Exception) {
+
+            }
         }
     }
 }
