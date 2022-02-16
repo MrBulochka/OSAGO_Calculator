@@ -34,6 +34,7 @@ abstract class AppDatabase: RoomDatabase() {
                     "App database"
                 )
                     .addCallback(AppDatabaseCallBack(scope, context))
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
 
