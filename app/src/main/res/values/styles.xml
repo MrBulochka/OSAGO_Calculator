@@ -12,6 +12,7 @@
 
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
+        <item name="behavior_skipCollapsed">true</item>
         <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>
 
