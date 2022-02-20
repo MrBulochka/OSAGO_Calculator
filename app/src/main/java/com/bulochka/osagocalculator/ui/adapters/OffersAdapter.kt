@@ -25,7 +25,9 @@ class OffersAdapter: ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OffersDif
         val offer = getItem(position)
         holder.onBind(offer)
         holder.itemView.setOnClickListener {
-
+            onOfferClickListener?.let {
+                it(offer)
+            }
         }
     }
 
@@ -63,5 +65,10 @@ class OffersAdapter: ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OffersDif
         override fun areContentsTheSame(oldItem: Offer, newItem: Offer): Boolean {
             return oldItem == newItem
         }
+    }
+
+    private var onOfferClickListener: ((Offer) -> Unit)? = null
+    fun setOnOfferClickListener(listener: (Offer) -> Unit) {
+        onOfferClickListener = listener
     }
 }

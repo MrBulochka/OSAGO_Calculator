@@ -7,9 +7,11 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.data.model.Coefficient
+import com.bulochka.osagocalculator.data.model.Offer
 import com.bulochka.osagocalculator.data.model.SendCoefficients
 import com.bulochka.osagocalculator.databinding.FragmentPriceBinding
 import com.bulochka.osagocalculator.ui.adapters.CoefficientsAdapter
@@ -26,6 +28,7 @@ class PriceFragment : Fragment() {
     private lateinit var coefficientsAdapter: CoefficientsAdapter
     private lateinit var offersAdapter: OffersAdapter
     private var coefficients = listOf<Coefficient>()
+    private val args: PriceFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +37,6 @@ class PriceFragment : Fragment() {
     ): View {
         _binding = FragmentPriceBinding.inflate(inflater, container, false)
 
-        val args: PriceFragmentArgs by navArgs()
         coefficients = args.coefficients.factors
 
         loadOffers(coefficients)
@@ -67,6 +69,10 @@ class PriceFragment : Fragment() {
         binding.coefficients.expandBtn.setOnClickListener {
             val isOpen = binding.coefficients.coefficientRecycler.visibility == View.VISIBLE
             priceViewModel.setCoefficientsState(!isOpen)
+        }
+
+        offersAdapter.setOnOfferClickListener { offer ->
+            moveToOffer(offer)
         }
     }
 
@@ -113,6 +119,12 @@ class PriceFragment : Fragment() {
             calculateBtn.text = buttonText
             calculateBtn.isClickable = true
         }
+    }
+
+    private fun moveToOffer(offer: Offer) {
+        val bundle = Bundle()
+        bundle.putSerializable("offer", offer)
+        findNavController().navigate(R.id.action_price_to_coefficients, bundle)
     }
 
     override fun onResume() {

@@ -1,4 +1,4 @@
-package com.bulochka.osagocalculator.ui.fragments.bottom_sheet
+package com.bulochka.osagocalculator.ui.fragments.input_bottom_sheet
 
 import android.content.Context
 import android.content.DialogInterface
@@ -13,15 +13,15 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.bulochka.osagocalculator.R
-import com.bulochka.osagocalculator.databinding.FragmentBottomSheetBinding
 import com.bulochka.osagocalculator.data.model.Data
+import com.bulochka.osagocalculator.databinding.FragmentInputBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class BottomSheetFragment: BottomSheetDialogFragment() {
+class InputBottomSheetFragment: BottomSheetDialogFragment() {
 
-    private var _binding: FragmentBottomSheetBinding? = null
+    private var _binding: FragmentInputBottomSheetBinding? = null
     private val binding get() = _binding!!
 
     private val dataList get() = requireArguments().getSerializable(DATA) as MutableList<Data>
@@ -37,7 +37,7 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentInputBottomSheetBinding.inflate(inflater, container, false)
 
         binding.root.minHeight = (Resources.getSystem().displayMetrics.heightPixels)/2
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -138,14 +138,14 @@ class BottomSheetFragment: BottomSheetDialogFragment() {
     }
 
     companion object {
-        private const val TAG = "BottomSheetFragment"
+        private const val TAG = "InputBottomSheetFragment"
         const val REQUEST_KEY = "REQUEST_DATA"
         const val DATA = "data"
         const val SELECTED_DATA = "selected_data"
 
 
         fun show(manager: FragmentManager, selectedData: Int, dataList: List<Data>) {
-            val dialogFragment = BottomSheetFragment()
+            val dialogFragment = InputBottomSheetFragment()
             dialogFragment.arguments = bundleOf(
                 SELECTED_DATA to selectedData,
                 DATA to dataList

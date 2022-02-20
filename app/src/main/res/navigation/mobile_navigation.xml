@@ -12,6 +12,11 @@
         tools:layout="@layout/fragment_coefficients">
         <action android:id="@+id/action_coefficients_to_price"
             app:destination="@+id/price"/>
+        <argument
+            android:name="offer"
+            app:argType="com.bulochka.osagocalculator.data.model.Offer"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment
@@ -19,6 +24,8 @@
         android:name="com.bulochka.osagocalculator.ui.fragments.price.PriceFragment"
         android:label="Рассчет цены полиса"
         tools:layout="@layout/fragment_price">
+        <action android:id="@+id/action_price_to_coefficients"
+            app:destination="@+id/coefficients" />
         <argument
             android:name="coefficients"
             app:argType="com.bulochka.osagocalculator.data.model.CoefficientsResponse" />

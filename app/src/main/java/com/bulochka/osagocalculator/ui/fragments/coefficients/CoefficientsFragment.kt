@@ -7,16 +7,15 @@ import android.view.View.*
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bulochka.osagocalculator.R
+import com.bulochka.osagocalculator.data.model.*
 import com.bulochka.osagocalculator.databinding.FragmentCoefficientsBinding
-import com.bulochka.osagocalculator.data.model.Coefficient
-import com.bulochka.osagocalculator.data.model.CoefficientsResponse
-import com.bulochka.osagocalculator.data.model.Data
-import com.bulochka.osagocalculator.data.model.SendData
 import com.bulochka.osagocalculator.ui.adapters.CoefficientsAdapter
 import com.bulochka.osagocalculator.ui.adapters.DataAdapter
-import com.bulochka.osagocalculator.ui.fragments.bottom_sheet.BottomSheetFragment
+import com.bulochka.osagocalculator.ui.fragments.input_bottom_sheet.InputBottomSheetFragment
+import com.bulochka.osagocalculator.ui.fragments.offer_bottom_sheet.OfferBottomSheetFragment
 
 class CoefficientsFragment: Fragment() {
 
@@ -30,6 +29,9 @@ class CoefficientsFragment: Fragment() {
     private var dataList = listOf<Data>()
     private var coefficients = listOf<Coefficient>()
 
+    private var isOfferOpen = false
+    private val args: CoefficientsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +42,9 @@ class CoefficientsFragment: Fragment() {
         initRecyclers()
         setUpObservers()
         setUpListeners()
+
+        isOfferOpen = savedInstanceState?.getBoolean(IS_OFFER_OPEN) ?: false
+        showOfferBottomSheet()
 
         return binding.root
     }
@@ -57,7 +62,7 @@ class CoefficientsFragment: Fragment() {
     }
 
     private fun setUpListeners() {
-        setUpBottomSheetListener()
+        setUpInputBottomSheetListener()
 
         binding.coefficients.expandBtn.setOnClickListener {
             val isOpen = binding.coefficients.coefficientRecycler.visibility == VISIBLE
@@ -65,7 +70,7 @@ class CoefficientsFragment: Fragment() {
         }
 
         dataAdapter.setOnDataClickListener { position ->
-            showBottomSheet(position)
+            showInputBottomSheet(position)
         }
 
         binding.calculateBtn.setOnClickListener {
@@ -135,12 +140,20 @@ class CoefficientsFragment: Fragment() {
         }
     }
 
-    private fun showBottomSheet(position: Int) {
-        BottomSheetFragment.show(requireActivity().supportFragmentManager, position, dataList)
+    private fun showInputBottomSheet(position: Int) {
+        InputBottomSheetFragment.show(requireActivity().supportFragmentManager, position, dataList)
     }
 
-    private fun setUpBottomSheetListener() {
-        BottomSheetFragment.setUpListener(requireActivity().supportFragmentManager, this) {
+    private fun showOfferBottomSheet() {
+        val offer = args.offer
+        if (offer != null && !isOfferOpen) {
+            OfferBottomSheetFragment.show(requireActivity().supportFragmentManager, offer)
+            isOfferOpen = true
+        }
+    }
+
+    private fun setUpInputBottomSheetListener() {
+        InputBottomSheetFragment.setUpListener(requireActivity().supportFragmentManager, this) {
             coefficientsViewModel.updateAllData(it)
             coefficientsViewModel.postData(SendData(it))
             binding.apply {
@@ -149,5 +162,14 @@ class CoefficientsFragment: Fragment() {
                 progressBar.visibility = VISIBLE
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(IS_OFFER_OPEN, isOfferOpen)
+    }
+
+    companion object {
+        const val IS_OFFER_OPEN = "IS_OFFER_OPEN"
     }
 }
