@@ -103,6 +103,7 @@
             android:layout_gravity="top"
             android:background="@drawable/button_inactive"
             android:text="@string/calculate_OSAGO"
+            android:textSize="16sp"
             android:textColor="@color/main_20"
             android:textAllCaps="false"
             android:clickable="false">
