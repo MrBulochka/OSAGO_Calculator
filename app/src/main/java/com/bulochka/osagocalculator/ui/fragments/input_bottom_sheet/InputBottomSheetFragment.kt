@@ -48,9 +48,9 @@ class InputBottomSheetFragment: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataIndex = savedInstanceState?.getInt(SELECTED_DATA) ?: selectedData
         dataList = requireArguments().getSerializable(DATA) as MutableList<Data>
         selectedData = requireArguments().getInt(SELECTED_DATA)
+        dataIndex = savedInstanceState?.getInt(SELECTED_DATA) ?: selectedData
 
         initViews()
         setUpClickListeners()
