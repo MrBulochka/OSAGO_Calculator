@@ -24,8 +24,8 @@ class InputBottomSheetFragment: BottomSheetDialogFragment() {
     private var _binding: FragmentInputBottomSheetBinding? = null
     private val binding get() = _binding!!
 
-    private val dataList get() = requireArguments().getSerializable(DATA) as MutableList<Data>
-    private val selectedData get() = requireArguments().getInt(SELECTED_DATA)
+    private var dataList = mutableListOf<Data>()
+    private var selectedData = 0
 
     private var dataIndex: Int = 0
 
@@ -49,6 +49,8 @@ class InputBottomSheetFragment: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dataIndex = savedInstanceState?.getInt(SELECTED_DATA) ?: selectedData
+        dataList = requireArguments().getSerializable(DATA) as MutableList<Data>
+        selectedData = requireArguments().getInt(SELECTED_DATA)
 
         initViews()
         setUpClickListeners()
@@ -95,6 +97,8 @@ class InputBottomSheetFragment: BottomSheetDialogFragment() {
             if (dataList.size >= dataIndex) {
                 title.text = dataList[dataIndex].hint
                 inputData.setText(dataList[dataIndex].value)
+                val selection = dataList[dataIndex].value.length
+                inputData.setSelection(selection)
                 inputData.inputType = dataList[dataIndex].inputType
             }
             setVisibility()

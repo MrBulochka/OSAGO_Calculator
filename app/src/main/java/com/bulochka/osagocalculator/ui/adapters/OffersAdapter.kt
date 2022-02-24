@@ -1,18 +1,14 @@
 package com.bulochka.osagocalculator.ui.adapters
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
 import com.bulochka.osagocalculator.data.model.Offer
 import com.bulochka.osagocalculator.databinding.ItemOfferBinding
+import com.bulochka.osagocalculator.utils.SvgLoader.loadUrl
 
 class OffersAdapter: ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OffersDiffUtils()) {
 
@@ -25,9 +21,7 @@ class OffersAdapter: ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OffersDif
         val offer = getItem(position)
         holder.onBind(offer)
         holder.itemView.setOnClickListener {
-            onOfferClickListener?.let {
-                it(offer)
-            }
+            onOfferClickListener?.invoke(offer)
         }
     }
 
@@ -37,23 +31,14 @@ class OffersAdapter: ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OffersDif
                 offerName.text = offer.name
                 offerPrice.text = "${offer.price} ₽"
                 offerRating.text = offer.rating.toString()
-                offerAvatar.loadUrl(offer.branding.bankLogoUrlSVG)
-                avatarCard.setCardBackgroundColor("#${offer.branding.backgroundColor}".toColorInt())
+                if (offer.branding.bankLogoUrlSVG != null) {
+                    offerAvatar.loadUrl(offer.branding.bankLogoUrlSVG)
+                } else {
+                    offerTitle.text = offer.branding.iconTitle
+                    offerTitle.setTextColor("#${offer.branding.fontColor}".toColorInt())
+                    avatarCard.setCardBackgroundColor("#${offer.branding.backgroundColor}".toColorInt())
+                }
             }
-        }
-
-        private fun ImageView.loadUrl(url: String) {
-            val imageLoader = ImageLoader.Builder(this.context)
-                .componentRegistry { add(SvgDecoder(this@loadUrl.context)) }
-                .build()
-
-            val request = ImageRequest.Builder(this.context)
-                .crossfade(true)
-                .data(url)
-                .target(this)
-                .build()
-
-            imageLoader.enqueue(request)
         }
     }
 

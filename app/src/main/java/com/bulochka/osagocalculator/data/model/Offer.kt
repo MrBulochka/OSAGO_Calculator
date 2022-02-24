@@ -10,8 +10,9 @@ data class Offer(
 ): Serializable
 
 data class Brand(
+    val fontColor: String,
     val backgroundColor: String,
     val iconTitle: String,
     val bankLogoUrlPDF: String,
     val bankLogoUrlSVG: String
-)
+): Serializable

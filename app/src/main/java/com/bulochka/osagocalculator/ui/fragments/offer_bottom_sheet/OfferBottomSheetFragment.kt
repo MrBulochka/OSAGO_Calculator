@@ -1,20 +1,16 @@
 package com.bulochka.osagocalculator.ui.fragments.offer_bottom_sheet
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.graphics.toColorInt
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
-import coil.ImageLoader
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.data.model.Offer
 import com.bulochka.osagocalculator.databinding.FragmentOfferBottomSheetBinding
+import com.bulochka.osagocalculator.utils.SvgLoader.loadUrl
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -24,7 +20,7 @@ class OfferBottomSheetFragment: BottomSheetDialogFragment() {
     private var _binding: FragmentOfferBottomSheetBinding? = null
     private val binding get() = _binding!!
 
-    private val offer get() = requireArguments().getSerializable(SELECTED_OFFER) as Offer
+    private lateinit var offer: Offer
 
     override fun getTheme() = R.style.AppBottomSheetDialogTheme
 
@@ -36,8 +32,10 @@ class OfferBottomSheetFragment: BottomSheetDialogFragment() {
 
         _binding = FragmentOfferBottomSheetBinding.inflate(inflater, container, false)
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        offer = requireArguments().getSerializable(SELECTED_OFFER) as Offer
 
         showOffer()
+        setUpListeners()
 
         return binding.root
     }
@@ -47,23 +45,20 @@ class OfferBottomSheetFragment: BottomSheetDialogFragment() {
             offerName.text = offer.name
             offerPrice.text = "${offer.price} ₽"
             offerRating.text = offer.rating.toString()
-            offerAvatar.loadUrl(offer.branding.bankLogoUrlSVG)
-            avatarCard.setCardBackgroundColor("#${offer.branding.backgroundColor}".toColorInt())
+            if (offer.branding.bankLogoUrlSVG != null) {
+                offerAvatar.loadUrl(offer.branding.bankLogoUrlSVG)
+            } else {
+                offerTitle.text = offer.branding.iconTitle
+                offerTitle.setTextColor("#${offer.branding.fontColor}".toColorInt())
+                avatarCard.setCardBackgroundColor("#${offer.branding.backgroundColor}".toColorInt())
+            }
         }
     }
 
-    private fun ImageView.loadUrl(url: String) {
-        val imageLoader = ImageLoader.Builder(this.context)
-            .componentRegistry { add(SvgDecoder(this@loadUrl.context)) }
-            .build()
-
-        val request = ImageRequest.Builder(this.context)
-            .crossfade(true)
-            .data(url)
-            .target(this)
-            .build()
-
-        imageLoader.enqueue(request)
+    private fun setUpListeners() {
+        binding.readyBtn.setOnClickListener {
+            dismiss()
+        }
     }
 
     companion object {

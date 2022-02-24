@@ -115,7 +115,7 @@ class PriceFragment : Fragment() {
             shimmer.visibility = GONE
             offersRecycler.visibility = VISIBLE
             calculateBtn.setBackgroundResource(R.drawable.button_active)
-            calculateBtn.setTextColor(resources.getColor(R.color.white))
+            calculateBtn.setTextColor(requireActivity().getColor(R.color.white))
             calculateBtn.text = buttonText
             calculateBtn.isClickable = true
         }

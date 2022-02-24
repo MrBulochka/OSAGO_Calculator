@@ -25,7 +25,9 @@
         android:label="Рассчет цены полиса"
         tools:layout="@layout/fragment_price">
         <action android:id="@+id/action_price_to_coefficients"
-            app:destination="@+id/coefficients" />
+            app:destination="@+id/coefficients"
+            app:popUpTo="@id/coefficients"
+            app:popUpToInclusive="true"/>
         <argument
             android:name="coefficients"
             app:argType="com.bulochka.osagocalculator.data.model.CoefficientsResponse" />

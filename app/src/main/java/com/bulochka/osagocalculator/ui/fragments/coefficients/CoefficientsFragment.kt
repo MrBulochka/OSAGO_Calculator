@@ -131,34 +131,35 @@ class CoefficientsFragment: Fragment() {
             if (isActive) {
                 setBackgroundResource(R.drawable.button_active)
                 isClickable = true
-                setTextColor(resources.getColor(R.color.white))
+                setTextColor(requireActivity().getColor(R.color.white))
             } else {
                 setBackgroundResource(R.drawable.button_inactive)
                 isClickable = false
-                setTextColor(resources.getColor(R.color.main_20))
+                setTextColor(requireActivity().getColor(R.color.main_20))
             }
         }
     }
 
     private fun showInputBottomSheet(position: Int) {
-        InputBottomSheetFragment.show(requireActivity().supportFragmentManager, position, dataList)
+        InputBottomSheetFragment.show(childFragmentManager, position, dataList)
     }
 
     private fun showOfferBottomSheet() {
         val offer = args.offer
         if (offer != null && !isOfferOpen) {
-            OfferBottomSheetFragment.show(requireActivity().supportFragmentManager, offer)
+            OfferBottomSheetFragment.show(childFragmentManager, offer)
             isOfferOpen = true
         }
     }
 
     private fun setUpInputBottomSheetListener() {
-        InputBottomSheetFragment.setUpListener(requireActivity().supportFragmentManager, this) {
+        InputBottomSheetFragment.setUpListener(childFragmentManager, this) {
             coefficientsViewModel.updateAllData(it)
             coefficientsViewModel.postData(SendData(it))
             binding.apply {
                 calculateBtn.text = ""
                 calculateBtn.setBackgroundResource(R.drawable.button_inactive)
+                calculateBtn.isClickable = false
                 progressBar.visibility = VISIBLE
             }
         }

@@ -2,6 +2,7 @@ package com.bulochka.osagocalculator.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "coefficients_table")
 data class Coefficient (
@@ -16,4 +17,4 @@ data class Coefficient (
         val name: String,
 
         val detailText: String
-)
+): Serializable

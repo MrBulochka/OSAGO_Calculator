@@ -21,9 +21,7 @@ class DataAdapter: ListAdapter<Data, DataAdapter.DataViewHolder>(DataDiffUtil())
         val data = getItem(position)
         holder.onBind(data)
         holder.itemView.setOnClickListener {
-            onDataClickListener?.let {
-                it(position)
-            }
+            onDataClickListener?.invoke(position)
         }
     }
 
