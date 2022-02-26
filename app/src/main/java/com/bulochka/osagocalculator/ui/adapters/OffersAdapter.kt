@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bulochka.osagocalculator.data.model.Offer
 import com.bulochka.osagocalculator.databinding.ItemOfferBinding
+import com.bulochka.osagocalculator.utils.OutputInformation
 import com.bulochka.osagocalculator.utils.SvgLoader.loadUrl
 
 class OffersAdapter: ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OffersDiffUtils()) {
@@ -29,7 +30,7 @@ class OffersAdapter: ListAdapter<Offer, OffersAdapter.OfferViewHolder>(OffersDif
         fun onBind(offer: Offer) {
             binding.apply {
                 offerName.text = offer.name
-                offerPrice.text = "${offer.price} ₽"
+                offerPrice.text = OutputInformation.getPriceText(offer.price.toString())
                 offerRating.text = offer.rating.toString()
                 if (offer.branding.bankLogoUrlSVG != null) {
                     offerAvatar.loadUrl(offer.branding.bankLogoUrlSVG)

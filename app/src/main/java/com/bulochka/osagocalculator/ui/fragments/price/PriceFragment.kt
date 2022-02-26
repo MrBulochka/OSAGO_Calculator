@@ -16,6 +16,7 @@ import com.bulochka.osagocalculator.data.model.SendCoefficients
 import com.bulochka.osagocalculator.databinding.FragmentPriceBinding
 import com.bulochka.osagocalculator.ui.adapters.CoefficientsAdapter
 import com.bulochka.osagocalculator.ui.adapters.OffersAdapter
+import com.bulochka.osagocalculator.utils.OutputInformation
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PriceFragment : Fragment() {
@@ -100,13 +101,12 @@ class PriceFragment : Fragment() {
     }
 
     private fun updateHeader(coefficients: List<Coefficient>) {
-        if (coefficients.size > 1) {
-            var header = coefficients[0].headerValue
-            for (i in 1 until coefficients.size) {
-                header += "×${coefficients[i].headerValue}"
-            }
-            binding.coefficients.header.text = header
-        }
+        binding.coefficients.header.text =
+            OutputInformation.getHeaderText(
+                coefficients,
+                requireActivity().getColor(R.color.blue_100),
+                requireActivity().getColor(R.color.main_20)
+            )
     }
 
     private fun updateUI(buttonText: String) {

@@ -16,6 +16,7 @@ import com.bulochka.osagocalculator.ui.adapters.CoefficientsAdapter
 import com.bulochka.osagocalculator.ui.adapters.DataAdapter
 import com.bulochka.osagocalculator.ui.fragments.input_bottom_sheet.InputBottomSheetFragment
 import com.bulochka.osagocalculator.ui.fragments.offer_bottom_sheet.OfferBottomSheetFragment
+import com.bulochka.osagocalculator.utils.OutputInformation
 
 class CoefficientsFragment: Fragment() {
 
@@ -101,13 +102,12 @@ class CoefficientsFragment: Fragment() {
     }
 
     private fun updateHeader(coefficients: List<Coefficient>) {
-        if (coefficients.size > 1) {
-            var header = coefficients[0].headerValue
-            for (i in 1 until coefficients.size) {
-                header += "×${coefficients[i].headerValue}"
-            }
-            binding.coefficients.header.text = header
-        }
+        binding.coefficients.header.text =
+            OutputInformation.getHeaderText(
+                coefficients,
+                requireActivity().getColor(R.color.blue_100),
+                requireActivity().getColor(R.color.main_20)
+            )
     }
 
     private fun setCoefficientsVisibility(isOpen: Boolean) {

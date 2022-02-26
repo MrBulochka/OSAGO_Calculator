@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import com.bulochka.osagocalculator.R
 import com.bulochka.osagocalculator.data.model.Offer
 import com.bulochka.osagocalculator.databinding.FragmentOfferBottomSheetBinding
+import com.bulochka.osagocalculator.utils.OutputInformation
 import com.bulochka.osagocalculator.utils.SvgLoader.loadUrl
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -43,7 +44,7 @@ class OfferBottomSheetFragment: BottomSheetDialogFragment() {
     private fun showOffer() {
         binding.offer.apply {
             offerName.text = offer.name
-            offerPrice.text = "${offer.price} ₽"
+            offerPrice.text = OutputInformation.getPriceText(offer.price.toString())
             offerRating.text = offer.rating.toString()
             if (offer.branding.bankLogoUrlSVG != null) {
                 offerAvatar.loadUrl(offer.branding.bankLogoUrlSVG)
